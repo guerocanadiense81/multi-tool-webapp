@@ -99,4 +99,31 @@ button.tool-button:hover {
   .tool-card img {
     height: 56px;
   }
+  /* Hide elements with the hidden class */
+.hidden {
+  display: none;
+}
+
+/* Add margin to the output box */
+.output-box {
+  margin-top: 20px;
+}
+
+/* Style for the back link (adds top margin and ensures it’s inline-block) */
+.back-link {
+  margin-top: 30px;
+  display: inline-block;
+}
+
+/* (Optional) Other styling for your tool buttons and container */
+.container {
+  /* Your container styles here */
+}
+
+.tool-button {
+  /* Your button styles here */
+}
+
+.error {
+  color: red;
 }
