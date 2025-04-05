@@ -1,2 +1,19 @@
-<!-- form-builder - fully functional HTML -->
-<script src='form-builder.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Builder</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🧱 Form Builder</h1>
+    <button class="tool-button" onclick="addInput()">Add Input</button>
+    <button class="tool-button" onclick="exportForm()">Export HTML</button>
+    <div id="formArea" style="margin:20px 0;"></div>
+    <textarea id="outputBox" rows="10" placeholder="Generated HTML will appear here..."></textarea>
+    <a href="../index.html" class="tool-button" style="margin-top:30px;">⬅ Back</a>
+  </div>
+  <script src="../js/form-builder.js"></script>
+</body>
+</html>
