@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <title>PGP Generator + Encrypt / Decrypt</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PGP Key Generator</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/openpgp@5.5.0/dist/openpgp.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>PGP Key Generator</h1>
+    <h1>🔐 PGP Key Generator</h1>
 
-    <input type="text" id="pgpName" placeholder="Full Name" />
-    <input type="email" id="pgpEmail" placeholder="Email Address" />
-    <input type="password" id="pgpPass" placeholder="Password (for private key)" />
+    <input id="pgpName" type="text" placeholder="Full Name">
+    <input id="pgpEmail" type="email" placeholder="Email">
+    <input id="pgpPass" type="password" placeholder="Password">
 
     <button class="tool-button" onclick="generatePGP()">Generate Keys</button>
 
-    <h3>Public Key</h3>
-    <textarea id="pgpPub" rows="6" readonly></textarea>
-    <button onclick="copyText('pgpPub')" class="tool-button">Copy Public Key</button>
+    <h3>📤 Public Key</h3>
+    <textarea id="pgpPub" rows="6"></textarea>
+    <button onclick="copyText('pgpPub')" class="tool-button">📋 Copy</button>
 
-    <h3>Private Key</h3>
-    <textarea id="pgpPriv" rows="6" readonly></textarea>
-    <button onclick="copyText('pgpPriv')" class="tool-button">Copy Private Key</button>
+    <h3>📥 Private Key</h3>
+    <textarea id="pgpPriv" rows="6"></textarea>
+    <button onclick="copyText('pgpPriv')" class="tool-button">📋 Copy</button>
 
-    <a href="index.html" class="tool-button" style="margin-top: 30px;">Back to Home</a>
+    <hr>
+
+    <h2>🧾 Message Encryption</h2>
+    <textarea id="encryptMessage" rows="4" placeholder="Type message to encrypt..."></textarea>
+    <textarea id="encryptWithPub" rows="6" placeholder="Paste public key to encrypt with..."></textarea>
+    <button class="tool-button" onclick="encryptMessage()">🔐 Encrypt</button>
+    <textarea id="encryptedOutput" rows="5" readonly></textarea>
+
+    <h2>📖 Message Decryption</h2>
+    <textarea id="decryptMessage" rows="5" placeholder="Paste encrypted message here..."></textarea>
+    <textarea id="decryptWithPriv" rows="6" placeholder="Paste private key here..."></textarea>
+    <input type="password" id="decryptPass" placeholder="Password for private key">
+    <button class="tool-button" onclick="decryptMessage()">🔓 Decrypt</button>
+    <textarea id="decryptedOutput" rows="4" readonly></textarea>
+
+    <a href="index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  </div>
+  <script src="js/pgp.js"></script>
 </body>
-<script src="../js/pgp.js"></script>
 </html>
