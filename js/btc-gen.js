@@ -1,25 +1,28 @@
-// Wrap all code in an IIFE to avoid polluting the global scope
+// Wrap our code in an IIFE to avoid polluting the global scope
 (function() {
   let latestWallet = null;
 
-  // Wait for the DOM to be fully loaded
+  // Attach event listeners when the DOM is ready
   document.addEventListener('DOMContentLoaded', function() {
     const generateBtn = document.getElementById("generateBtn");
     const downloadBtn = document.getElementById("downloadBtn");
 
-    // Use event listeners instead of inline event attributes
     generateBtn.addEventListener("click", generateBTC);
     downloadBtn.addEventListener("click", downloadWallet);
   });
 
   function generateBTC() {
     try {
-      // Confirm that bip39 is available
-      if (typeof bip39 === 'undefined') {
-        throw new Error("bip39 is not loaded");
+      // Verify that bitcore and bitcore.Mnemonic are loaded
+      if (typeof bitcore === 'undefined' || typeof bitcore.Mnemonic === 'undefined') {
+        throw new Error("bitcore-mnemonic is not loaded");
       }
-      const mnemonic = bip39.generateMnemonic();
-      const seed = bip39.mnemonicToSeedSync(mnemonic);
+      // Generate the mnemonic using bitcore-mnemonic
+      const mnemonicObj = new bitcore.Mnemonic();
+      const mnemonic = mnemonicObj.toString();
+      const seed = mnemonicObj.toSeed(); // Returns a Buffer
+
+      // Use bitcoinjs-lib to derive the wallet
       const root = bitcoinjs.bip32.fromSeed(seed);
       const account = root.derivePath("m/44'/0'/0'/0/0");
       const { address } = bitcoinjs.payments.p2pkh({ pubkey: account.publicKey });
@@ -27,8 +30,7 @@
 
       latestWallet = { mnemonic, address, wif };
 
-      const outputBox = document.getElementById("outputBox");
-      outputBox.innerHTML = `
+      document.getElementById("outputBox").innerHTML = `
         <p><strong>Mnemonic:</strong><br><textarea rows="2" readonly>${mnemonic}</textarea></p>
         <p><strong>BTC Address:</strong><br><code>${address}</code></p>
         <p><strong>Private Key (WIF):</strong><br><code>${wif}</code></p>
