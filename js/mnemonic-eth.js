@@ -1,7 +1,4 @@
 async function generateMnemonic() {
-  const bip39 = window.bip39;
-  const ethers = window.ethers;
-
   const mnemonic = bip39.generateMnemonic();
   const wallet = ethers.Wallet.fromMnemonic(mnemonic);
 
