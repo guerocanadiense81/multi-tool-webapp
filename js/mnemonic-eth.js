@@ -1,2 +1,6 @@
-// mnemonic-eth.js - full logic implemented here
-console.log('mnemonic-eth ready');
+function generateMnemonic() {
+  const phrase = bip39.generateMnemonic();
+  document.getElementById("outputBox").innerHTML = `
+    <p><strong>Mnemonic:</strong><br><code>${phrase}</code></p>
+  `;
+}
