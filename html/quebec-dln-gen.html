@@ -1,2 +1,19 @@
-<!-- quebec-dln-gen - fully functional HTML -->
-<script src='quebec-dln-gen.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quebec DL Generator</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎫 Quebec DL Number Generator</h1>
+    <input id="name" type="text" placeholder="Name (LAST, FIRST)" />
+    <input id="dob" type="date" />
+    <button class="tool-button" onclick="generateDL()">Generate</button>
+    <div id="outputBox"></div>
+    <a href="../index.html" class="tool-button" style="margin-top:30px;">⬅ Back</a>
+  </div>
+  <script src="../js/quebec-dln-gen.js"></script>
+</body>
+</html>
