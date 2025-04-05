@@ -9,28 +9,25 @@
 <body>
   <div class="container">
     <h1>₿ BTC Wallet Generator</h1>
-    <button class="tool-button" onclick="generateBTC()">Generate Wallet</button>
-    <button class="tool-button" id="downloadBtn" style="display:none;" onclick="downloadWallet()">⬇ Download Wallet.txt</button>
+    <button class="tool-button" id="generateBtn">Generate Wallet</button>
+    <button class="tool-button" id="downloadBtn" style="display:none;">⬇ Download Wallet.txt</button>
     <div id="outputBox" style="margin-top: 20px;"></div>
     <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
 
-    <!-- ✅ Load scripts LAST to avoid undefined error -->
+    <!-- ✅ Load correct libraries -->
     <script src="https://unpkg.com/bip39@3.0.4/browser/bip39.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
+
     <script>
       let latestWallet = null;
 
-      function generateBTC() {
+      document.getElementById("generateBtn").addEventListener("click", () => {
         try {
-          if (!window.bip39 || !window.bitcoinjs) {
-            throw new Error("Libraries not loaded yet");
-          }
-
-          const mnemonic = bip39.generateMnemonic();
-          const seed = bip39.mnemonicToSeedSync(mnemonic);
-          const root = bitcoinjs.bip32.fromSeed(seed);
+          const mnemonic = window.bip39.generateMnemonic();
+          const seed = window.bip39.mnemonicToSeedSync(mnemonic);
+          const root = window.bitcoinjs.bip32.fromSeed(seed);
           const child = root.derivePath("m/44'/0'/0'/0/0");
-          const { address } = bitcoinjs.payments.p2pkh({ pubkey: child.publicKey });
+          const { address } = window.bitcoinjs.payments.p2pkh({ pubkey: child.publicKey });
           const wif = child.toWIF();
 
           latestWallet = { mnemonic, address, wif };
@@ -43,12 +40,12 @@
           document.getElementById("downloadBtn").style.display = "inline-block";
         } catch (err) {
           document.getElementById("outputBox").innerHTML =
-            `<p style="color:red;">❌ Failed to generate: ${err.message}</p>`;
+            `<p style="color:red;">❌ Error: ${err.message}</p>`;
           document.getElementById("downloadBtn").style.display = "none";
         }
-      }
+      });
 
-      function downloadWallet() {
+      document.getElementById("downloadBtn").addEventListener("click", () => {
         if (!latestWallet) return;
         const text = `
 BTC Wallet
@@ -69,7 +66,7 @@ ${latestWallet.wif}
         a.download = "btc-wallet.txt";
         a.click();
         URL.revokeObjectURL(url);
-      }
+      });
     </script>
   </div>
 </body>
