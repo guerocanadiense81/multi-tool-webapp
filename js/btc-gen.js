@@ -1,8 +1,8 @@
-// Wrap our code in an IIFE to avoid polluting the global scope
+// Wrap all code in an IIFE to avoid polluting the global scope
 (function() {
   let latestWallet = null;
 
-  // Attach event listeners when the DOM is ready
+  // Attach event listeners after the DOM is fully loaded
   document.addEventListener('DOMContentLoaded', function() {
     const generateBtn = document.getElementById("generateBtn");
     const downloadBtn = document.getElementById("downloadBtn");
@@ -35,11 +35,13 @@
         <p><strong>BTC Address:</strong><br><code>${address}</code></p>
         <p><strong>Private Key (WIF):</strong><br><code>${wif}</code></p>
       `;
-      document.getElementById("downloadBtn").style.display = "inline-block";
+      // Instead of setting inline style, remove the "hidden" class to show the button
+      document.getElementById("downloadBtn").classList.remove("hidden");
     } catch (err) {
       document.getElementById("outputBox").innerHTML =
-        `<p style="color:red;">❌ Failed to generate: ${err.message}</p>`;
-      document.getElementById("downloadBtn").style.display = "none";
+        `<p class="error">❌ Failed to generate: ${err.message}</p>`;
+      // Add the "hidden" class to hide the download button on error
+      document.getElementById("downloadBtn").classList.add("hidden");
     }
   }
 
