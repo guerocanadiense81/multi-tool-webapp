@@ -1,2 +1,36 @@
-<!-- barcode-generator - fully functional HTML -->
-<script src='barcode-generator.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barcode Generator</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>📦 Barcode Generator</h1>
+
+    <label for="barcodeInput">Enter value:</label>
+    <input id="barcodeInput" type="text" placeholder="123456789012">
+
+    <label for="barcodeType">Select type:</label>
+    <select id="barcodeType">
+      <option value="CODE128">CODE128</option>
+      <option value="EAN13">EAN13</option>
+      <option value="UPC">UPC</option>
+    </select>
+
+    <button class="tool-button" onclick="generateBarcode()">Generate</button>
+
+    <div id="outputBox" style="margin-top: 20px;">
+      <svg id="barcodeSvg"></svg>
+      <a id="downloadLink" class="tool-button" style="display: none;" download="barcode.svg">⬇ Download SVG</a>
+    </div>
+
+    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  </div>
+
+  <script src="../js/barcode-generator.js"></script>
+</body>
+</html>
