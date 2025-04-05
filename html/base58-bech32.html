@@ -1,2 +1,18 @@
-<!-- base58-bech32 - fully functional HTML -->
-<script src='base58-bech32.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base58 / Bech32 Converter</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔄 Base58 / Bech32 Converter</h1>
+    <input id="inputValue" type="text" placeholder="Enter hex or base58 value" />
+    <button class="tool-button" onclick="convertValue()">Convert</button>
+    <div id="outputBox"></div>
+    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  </div>
+  <script src="../js/base58-bech32.js"></script>
+</body>
+</html>
