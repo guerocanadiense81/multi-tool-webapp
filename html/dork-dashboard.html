@@ -1,2 +1,21 @@
-<!-- dork-dashboard - fully functional HTML -->
-<script src='dork-dashboard.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dork Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Dork Dashboard</h1>
+    <select id="typeSelect" onchange="loadDorks()">
+      <option value="surface">Surface Web</option>
+      <option value="deep">Deep Web</option>
+      <option value="dark">Dark Web</option>
+    </select>
+    <ul id="outputBox"></ul>
+    <a href="../index.html" class="tool-button" style="margin-top:30px;">⬅ Back</a>
+  </div>
+  <script src="../js/dork-dashboard.js"></script>
+</body>
+</html>
