@@ -1,2 +1,20 @@
-<!-- remove-bg - fully functional HTML -->
-<script src='remove-bg.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Remove Background</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🖼️ AI Background Remover</h1>
+    <input type="file" id="upload" accept="image/*" />
+    <button class="tool-button" onclick="removeBackground()">Remove BG</button>
+    <div id="outputBox">
+      <img id="preview" style="max-width:100%; margin-top:10px;" />
+    </div>
+    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  </div>
+  <script src="../js/remove-bg.js"></script>
+</body>
+</html>
