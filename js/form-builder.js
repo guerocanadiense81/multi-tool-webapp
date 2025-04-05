@@ -1,11 +1,21 @@
-function addInput() {
-  const div = document.createElement("div");
-  div.innerHTML = `<label>Label: <input type="text" name="field" placeholder="Enter..." /></label><br>`;
-  document.getElementById("formArea").appendChild(div);
-}
+let formBuilderInstance;
+
+$(function () {
+  const options = {
+    disableFields: ['autocomplete'], // or [] to enable all
+    stickyControls: { enable: true },
+    onSave: function(evt, formData) {
+      const render = $('<div/>');
+      render.formRender({ formData });
+      document.getElementById("outputBox").value = render.html();
+    }
+  };
+  formBuilderInstance = $('#form-builder').formBuilder(options);
+});
 
 function exportForm() {
-  const formArea = document.getElementById("formArea");
-  const output = formArea.innerHTML.replace(/<br>/g, "").trim();
-  document.getElementById("outputBox").value = `<form>\n${output}\n</form>`;
+  const formData = formBuilderInstance.actions.getData('json');
+  const render = $('<div/>');
+  render.formRender({ formData });
+  document.getElementById("outputBox").value = render.html();
 }
