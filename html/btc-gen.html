@@ -4,24 +4,23 @@
   <meta charset="UTF-8">
   <title>BTC Wallet Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Updated CSP: Allow scripts from our sources and permit unsafe eval -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-eval' 'nonce-abc123';">
+  <!-- Updated CSP: allow scripts from cdnjs and cdn.jsdelivr.net and unsafe-eval if necessary -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net 'unsafe-eval' 'nonce-abc123';">
   <link rel="stylesheet" href="../css/style.css">
   
-  <!-- Load external libraries (allowed by our updated CSP) -->
-  <script src="https://unpkg.com/bip39@2.5.0/browser/bip39.min.js"></script>
+  <!-- Load bitcore-mnemonic (alternative to bip39) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bitcore-mnemonic/2.0.0/bitcore-mnemonic.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>₿ BTC Wallet Generator</h1>
-    <!-- Removed inline event handlers -->
     <button class="tool-button" id="generateBtn">Generate Wallet</button>
     <button class="tool-button" id="downloadBtn" style="display:none;">⬇ Download Wallet.txt</button>
     <div id="outputBox" style="margin-top: 20px;"></div>
     <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
   </div>
-  <!-- Include external JavaScript file with nonce -->
+  <!-- External JavaScript file with nonce -->
   <script src="../js/btc-gen.js" nonce="abc123"></script>
 </body>
 </html>
