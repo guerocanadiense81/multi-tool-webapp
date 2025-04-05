@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>BTC Wallet Generator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../css/style.css" />
-
-  <!-- Updated bip39 CDN to version 2.5.0 -->
-  <script src="https://cdn.jsdelivr.net/npm/bip39@2.5.0/browser/bip39.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  
+  <!-- Use bip39 version 2.5.0 from unpkg (browser build) -->
+  <script src="https://unpkg.com/bip39@2.5.0/browser/bip39.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
 </head>
 <body>
@@ -23,6 +23,10 @@
 
     function generateBTC() {
       try {
+        // Ensure bip39 is loaded
+        if (!window.bip39) {
+          throw new Error("bip39 is not loaded");
+        }
         const mnemonic = bip39.generateMnemonic();
         const seed = bip39.mnemonicToSeedSync(mnemonic);
         const root = bitcoinjs.bip32.fromSeed(seed);
