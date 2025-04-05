@@ -9,36 +9,36 @@ function generateDLN() {
     return;
   }
 
-  const nameCode = quebecNameCode(lastName); // Generate 5-char code like M6152
+  const nameCode = quebecNameCode(lastName); // M6152
 
   const birthDate = new Date(dob);
-  const yy = birthDate.getFullYear().toString().slice(-2);
-  let mm = birthDate.getMonth() + 1;
-  if (gender === "F") mm += 50;
-  const dd = birthDate.getDate().toString().padStart(2, "0");
-  const mmFormatted = mm.toString().padStart(2, "0");
+  const year = birthDate.getFullYear().toString().slice(-2);
+  let month = birthDate.getMonth() + 1;
+  if (gender === "F") month += 50;
+  const day = birthDate.getDate().toString().padStart(2, '0');
+  const monthStr = month.toString().padStart(2, '0');
 
-  const dln = `${nameCode}-${dd}${mmFormatted}${yy}`;
-
-  output.innerHTML = `<p><strong>Generated DLN:</strong><br><code>${dln}</code></p>`;
+  const finalDLN = `${nameCode}-${day}${monthStr}${year}`;
+  output.innerHTML = `<p><strong>DLN:</strong> <code>${finalDLN}</code></p>`;
 }
 
 function quebecNameCode(name) {
   const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
-  let code = letters[0]; // First letter
-  const soundexMap = {
-    A: '', E: '', I: '', O: '', U: '', H: '', W: '', Y: '',
-    B: '1', F: '1', P: '1', V: '1',
-    C: '2', G: '2', J: '2', K: '2', Q: '2', S: '2', X: '2', Z: '2',
-    D: '3', T: '3',
-    L: '4',
-    M: '5', N: '5',
-    R: '6'
+  let code = letters[0]; // First letter only
+
+  const map = {
+    A:'', E:'', I:'', O:'', U:'', H:'', W:'', Y:'',
+    B:'1', F:'1', P:'1', V:'1',
+    C:'2', G:'2', J:'2', K:'2', Q:'2', S:'2', X:'2', Z:'2',
+    D:'3', T:'3',
+    L:'4',
+    M:'5', N:'5',
+    R:'6'
   };
 
   let prevDigit = '';
   for (let i = 1; i < letters.length && code.length < 5; i++) {
-    const digit = soundexMap[letters[i]] || '';
+    const digit = map[letters[i]] || '';
     if (digit !== prevDigit && digit !== '') {
       code += digit;
       prevDigit = digit;
