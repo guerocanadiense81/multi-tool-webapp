@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>BTC Wallet Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Updated CSP to allow scripts from unpkg.com and cdn.jsdelivr.net -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'nonce-abc123';">
+  <!-- Updated CSP: Allow scripts from our sources and permit unsafe eval -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-eval' 'nonce-abc123';">
   <link rel="stylesheet" href="../css/style.css">
   
   <!-- Load external libraries (allowed by our updated CSP) -->
