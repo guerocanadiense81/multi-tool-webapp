@@ -1,2 +1,18 @@
-<!-- cc-validator - fully functional HTML -->
-<script src='cc-validator.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Credit Card Validator</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>💳 Credit Card Validator</h1>
+    <input id="ccInput" type="text" placeholder="Enter card number" />
+    <button class="tool-button" onclick="validateCC()">Validate</button>
+    <div id="outputBox"></div>
+    <a href="../index.html" class="tool-button" style="margin-top:30px;">⬅ Back</a>
+  </div>
+  <script src="../js/cc-validator.js"></script>
+</body>
+</html>
