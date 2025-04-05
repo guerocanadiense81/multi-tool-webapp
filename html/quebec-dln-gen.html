@@ -2,16 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Quebec DL Generator</title>
+  <title>Quebec DLN Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>🎫 Quebec DL Number Generator</h1>
-    <input id="name" type="text" placeholder="Name (LAST, FIRST)" />
-    <input id="dob" type="date" />
-    <button class="tool-button" onclick="generateDL()">Generate</button>
+    <h1>🎫 Quebec DLN Generator</h1>
+
+    <input type="text" id="lastName" placeholder="Last Name (e.g., Tremblay)">
+    <input type="date" id="dob">
+    <select id="gender">
+      <option value="M">Male</option>
+      <option value="F">Female</option>
+    </select>
+
+    <button class="tool-button" onclick="generateDLN()">Generate</button>
+
     <div id="outputBox"></div>
+
     <a href="../index.html" class="tool-button" style="margin-top:30px;">⬅ Back</a>
   </div>
   <script src="../js/quebec-dln-gen.js"></script>
