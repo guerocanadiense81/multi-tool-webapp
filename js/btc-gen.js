@@ -1,8 +1,8 @@
-// Wrap code in an IIFE to avoid polluting the global scope
+// Wrap all code in an IIFE to avoid polluting the global scope
 (function() {
   let latestWallet = null;
 
-  // Wait until the DOM is fully loaded
+  // Wait for the DOM to be fully loaded
   document.addEventListener('DOMContentLoaded', function() {
     const generateBtn = document.getElementById("generateBtn");
     const downloadBtn = document.getElementById("downloadBtn");
@@ -14,7 +14,7 @@
 
   function generateBTC() {
     try {
-      // Ensure that bip39 is loaded
+      // Confirm that bip39 is available
       if (typeof bip39 === 'undefined') {
         throw new Error("bip39 is not loaded");
       }
