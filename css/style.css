@@ -1,20 +1,30 @@
-
 body {
   background: #0a0a0a;
   color: #0f0;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
 .container {
-  max-width: 900px;
+  max-width: 1024px;
   margin: auto;
   padding: 20px;
 }
+
+h1, h2 {
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0;
+  margin-bottom: 0.5em;
+}
+
 .tool-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
 }
+
 .tool-card {
   background: #111;
   padding: 12px;
@@ -24,11 +34,69 @@ body {
   border-radius: 10px;
   text-decoration: none;
   color: #0f0;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .tool-card img {
   height: 64px;
   margin-bottom: 10px;
+  transition: transform 0.3s ease;
 }
+
 .tool-card:hover {
-  background: #222;
+  background: #1a1a1a;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+.tool-card:hover img {
+  transform: scale(1.1) rotate(2deg);
+}
+
+footer {
+  color: #666;
+  margin-top: 3rem;
+  font-size: 0.9em;
+  text-align: center;
+  border-top: 1px solid #222;
+  padding-top: 1rem;
+  opacity: 0.7;
+}
+
+input, select, button, textarea {
+  background: #111;
+  border: 1px solid #444;
+  color: #0f0;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button.tool-button {
+  background-color: #0f0;
+  color: #000;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+button.tool-button:hover {
+  background-color: #afff00;
+  color: #000;
+  box-shadow: 0 0 10px #0f0;
+}
+
+@media (max-width: 768px) {
+  .tool-grid {
+    justify-content: center;
+  }
+  .tool-card {
+    width: 120px;
+  }
+  .tool-card img {
+    height: 56px;
+  }
 }
