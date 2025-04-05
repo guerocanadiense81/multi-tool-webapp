@@ -1,0 +1,1 @@
+function validateEmail() { const email = document.getElementById('emailInput').value.trim(); alert('Validated: ' + email); }
