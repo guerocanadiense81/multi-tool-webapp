@@ -4,70 +4,60 @@
   <meta charset="UTF-8" />
   <title>BTC Wallet Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    .tool-button { padding: 10px 20px; margin: 10px 5px; cursor: pointer; }
+    textarea { width: 100%; resize: vertical; }
+    code { background: #eee; padding: 5px; display: block; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>₿ BTC Wallet Generator</h1>
-    <button class="tool-button" id="generateBtn">Generate Wallet</button>
-    <button class="tool-button" id="downloadBtn" style="display:none;">⬇ Download Wallet.txt</button>
-    <div id="outputBox" style="margin-top: 20px;"></div>
-    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  <h1>₿ BTC Wallet Generator</h1>
+  <button class="tool-button" onclick="generate()">Generate Wallet</button>
+  <button class="tool-button" id="saveBtn" style="display:none;" onclick="download()">⬇ Download Wallet</button>
+  <div id="output"></div>
 
-    <!-- ✅ Load correct libraries -->
-    <script src="https://unpkg.com/bip39@3.0.4/browser/bip39.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bip39@3.0.4/browser/bip39.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
 
-    <script>
-      let latestWallet = null;
+  <script>
+    let wallet = null;
 
-      document.getElementById("generateBtn").addEventListener("click", () => {
-        try {
-          const mnemonic = window.bip39.generateMnemonic();
-          const seed = window.bip39.mnemonicToSeedSync(mnemonic);
-          const root = window.bitcoinjs.bip32.fromSeed(seed);
-          const child = root.derivePath("m/44'/0'/0'/0/0");
-          const { address } = window.bitcoinjs.payments.p2pkh({ pubkey: child.publicKey });
-          const wif = child.toWIF();
+    function generate() {
+      try {
+        if (!window.bip39 || !window.bitcoinjs) throw new Error("bip39 or bitcoinjs-lib not loaded");
 
-          latestWallet = { mnemonic, address, wif };
+        const mnemonic = bip39.generateMnemonic();
+        const seed = bip39.mnemonicToSeedSync(mnemonic);
+        const root = bitcoinjs.bip32.fromSeed(seed);
+        const child = root.derivePath("m/44'/0'/0'/0/0");
+        const { address } = bitcoinjs.payments.p2pkh({ pubkey: child.publicKey });
+        const wif = child.toWIF();
 
-          document.getElementById("outputBox").innerHTML = `
-            <p><strong>Mnemonic:</strong><br><textarea rows="2" readonly>${mnemonic}</textarea></p>
-            <p><strong>BTC Address:</strong><br><code>${address}</code></p>
-            <p><strong>Private Key (WIF):</strong><br><code>${wif}</code></p>
-          `;
-          document.getElementById("downloadBtn").style.display = "inline-block";
-        } catch (err) {
-          document.getElementById("outputBox").innerHTML =
-            `<p style="color:red;">❌ Error: ${err.message}</p>`;
-          document.getElementById("downloadBtn").style.display = "none";
-        }
-      });
+        wallet = { mnemonic, address, wif };
 
-      document.getElementById("downloadBtn").addEventListener("click", () => {
-        if (!latestWallet) return;
-        const text = `
-BTC Wallet
+        document.getElementById("output").innerHTML = `
+          <p><strong>Mnemonic:</strong><br><textarea rows="2">${mnemonic}</textarea></p>
+          <p><strong>BTC Address:</strong><br><code>${address}</code></p>
+          <p><strong>Private Key (WIF):</strong><br><code>${wif}</code></p>
+        `;
+        document.getElementById("saveBtn").style.display = 'inline-block';
+      } catch (e) {
+        document.getElementById("output").innerHTML = `<p style="color:red;">❌ Error: ${e.message}</p>`;
+        document.getElementById("saveBtn").style.display = 'none';
+      }
+    }
 
-Mnemonic:
-${latestWallet.mnemonic}
-
-Address:
-${latestWallet.address}
-
-Private Key (WIF):
-${latestWallet.wif}
-`;
-        const blob = new Blob([text.trim()], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "btc-wallet.txt";
-        a.click();
-        URL.revokeObjectURL(url);
-      });
-    </script>
-  </div>
+    function download() {
+      if (!wallet) return;
+      const content = `BTC Wallet\n\nMnemonic:\n${wallet.mnemonic}\n\nAddress:\n${wallet.address}\n\nPrivate Key (WIF):\n${wallet.wif}`;
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'btc-wallet.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  </script>
 </body>
 </html>
