@@ -4,78 +4,24 @@
   <meta charset="UTF-8">
   <title>BTC Wallet Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Content Security Policy without 'unsafe-eval'; external scripts must include the matching nonce -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-abc123';">
   <link rel="stylesheet" href="../css/style.css">
   
-  <!-- Use bip39 version 2.5.0 from unpkg (browser build) -->
+  <!-- Load libraries built for browsers -->
   <script src="https://unpkg.com/bip39@2.5.0/browser/bip39.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>₿ BTC Wallet Generator</h1>
-    <button class="tool-button" onclick="generateBTC()">Generate Wallet</button>
-    <button class="tool-button" id="downloadBtn" style="display:none;" onclick="downloadWallet()">⬇ Download Wallet.txt</button>
+    <!-- Removed inline onclick attributes -->
+    <button class="tool-button" id="generateBtn">Generate Wallet</button>
+    <button class="tool-button" id="downloadBtn" style="display:none;">⬇ Download Wallet.txt</button>
     <div id="outputBox" style="margin-top: 20px;"></div>
     <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
   </div>
-  <script>
-    let latestWallet = null;
-
-    function generateBTC() {
-      try {
-        // Ensure bip39 is loaded
-        if (!window.bip39) {
-          throw new Error("bip39 is not loaded");
-        }
-        const mnemonic = bip39.generateMnemonic();
-        const seed = bip39.mnemonicToSeedSync(mnemonic);
-        const root = bitcoinjs.bip32.fromSeed(seed);
-        const account = root.derivePath("m/44'/0'/0'/0/0");
-        const { address } = bitcoinjs.payments.p2pkh({ pubkey: account.publicKey });
-        const wif = account.toWIF();
-
-        latestWallet = { mnemonic, address, wif };
-
-        document.getElementById("outputBox").innerHTML = `
-          <p><strong>Mnemonic:</strong><br><textarea rows="2" readonly>${mnemonic}</textarea></p>
-          <p><strong>BTC Address:</strong><br><code>${address}</code></p>
-          <p><strong>Private Key (WIF):</strong><br><code>${wif}</code></p>
-        `;
-        document.getElementById("downloadBtn").style.display = "inline-block";
-      } catch (err) {
-        document.getElementById("outputBox").innerHTML =
-          `<p style="color:red;">❌ Failed to generate: ${err.message}</p>`;
-        document.getElementById("downloadBtn").style.display = "none";
-      }
-    }
-
-    function downloadWallet() {
-      if (!latestWallet) return;
-
-      const text = `
-BTC Wallet
-
-Mnemonic:
-${latestWallet.mnemonic}
-
-Address:
-${latestWallet.address}
-
-Private Key (WIF):
-${latestWallet.wif}
-      `;
-
-      const blob = new Blob([text.trim()], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "btc-wallet.txt";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-  </script>
+  <!-- Include external JavaScript file with the nonce attribute -->
+  <script src="../js/btc-gen.js" nonce="abc123"></script>
 </body>
 </html>
