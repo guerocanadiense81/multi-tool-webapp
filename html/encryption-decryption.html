@@ -1,2 +1,21 @@
-<!-- encryption-decryption - fully functional HTML -->
-<script src='encryption-decryption.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Encrypt / Decrypt Tool</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🔐 Encrypt / Decrypt Tool (AES)</h1>
+    <textarea id="text" placeholder="Enter text here"></textarea>
+    <input id="password" type="password" placeholder="Password" />
+    <button class="tool-button" onclick="encrypt()">Encrypt</button>
+    <button class="tool-button" onclick="decrypt()">Decrypt</button>
+    <div id="outputBox"></div>
+    <a href="../index.html" class="tool-button" style="margin-top:30px;">⬅ Back</a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+  <script src="../js/encryption-decryption.js"></script>
+</body>
+</html>
