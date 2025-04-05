@@ -1,32 +1,50 @@
-let latestWallet = null;
+// Wrap code in an IIFE to avoid polluting the global scope
+(function() {
+  let latestWallet = null;
 
-function generateBTC() {
-  try {
-    const mnemonic = window.bip39.generateMnemonic();
-    const seed = window.bip39.mnemonicToSeedSync(mnemonic);
-    const root = bitcoinjs.bip32.fromSeed(seed);
-    const child = root.derivePath("m/44'/0'/0'/0/0");
-    const { address } = bitcoinjs.payments.p2pkh({ pubkey: child.publicKey });
-    const wif = child.toWIF();
+  // Wait until the DOM is fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const generateBtn = document.getElementById("generateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
 
-    latestWallet = { mnemonic, address, wif };
+    // Use event listeners instead of inline event attributes
+    generateBtn.addEventListener("click", generateBTC);
+    downloadBtn.addEventListener("click", downloadWallet);
+  });
 
-    document.getElementById("outputBox").innerHTML = `
-      <p><strong>Mnemonic:</strong><br><textarea rows="2">${mnemonic}</textarea></p>
-      <p><strong>BTC Address:</strong><br><code>${address}</code></p>
-      <p><strong>Private Key (WIF):</strong><br><code>${wif}</code></p>
-    `;
-    document.getElementById("downloadBtn").style.display = "inline-block";
-  } catch (err) {
-    document.getElementById("outputBox").innerHTML =
-      `<p style="color:red;">❌ Failed to generate: ${err.message}</p>`;
-    document.getElementById("downloadBtn").style.display = "none";
+  function generateBTC() {
+    try {
+      // Ensure that bip39 is loaded
+      if (typeof bip39 === 'undefined') {
+        throw new Error("bip39 is not loaded");
+      }
+      const mnemonic = bip39.generateMnemonic();
+      const seed = bip39.mnemonicToSeedSync(mnemonic);
+      const root = bitcoinjs.bip32.fromSeed(seed);
+      const account = root.derivePath("m/44'/0'/0'/0/0");
+      const { address } = bitcoinjs.payments.p2pkh({ pubkey: account.publicKey });
+      const wif = account.toWIF();
+
+      latestWallet = { mnemonic, address, wif };
+
+      const outputBox = document.getElementById("outputBox");
+      outputBox.innerHTML = `
+        <p><strong>Mnemonic:</strong><br><textarea rows="2" readonly>${mnemonic}</textarea></p>
+        <p><strong>BTC Address:</strong><br><code>${address}</code></p>
+        <p><strong>Private Key (WIF):</strong><br><code>${wif}</code></p>
+      `;
+      document.getElementById("downloadBtn").style.display = "inline-block";
+    } catch (err) {
+      document.getElementById("outputBox").innerHTML =
+        `<p style="color:red;">❌ Failed to generate: ${err.message}</p>`;
+      document.getElementById("downloadBtn").style.display = "none";
+    }
   }
-}
 
-function downloadWallet() {
-  if (!latestWallet) return;
-  const text = `
+  function downloadWallet() {
+    if (!latestWallet) return;
+
+    const text = `
 BTC Wallet
 
 Mnemonic:
@@ -37,13 +55,16 @@ ${latestWallet.address}
 
 Private Key (WIF):
 ${latestWallet.wif}
-`;
+    `;
+    const blob = new Blob([text.trim()], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
 
-  const blob = new Blob([text.trim()], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "btc-wallet.txt";
-  a.click();
-  URL.revokeObjectURL(url);
-}
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "btc-wallet.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+})();
