@@ -10,19 +10,22 @@
   <div class="container">
     <h1>🎫 Quebec DLN Generator</h1>
 
-    <input type="text" id="lastName" placeholder="Last Name (e.g., Tremblay)">
+    <p>Example format: <strong>M6152-041081</strong> (Moreau, 1981-10-04, Male)</p>
+
+    <input type="text" id="lastName" placeholder="Last Name (e.g. Moreau)">
     <input type="date" id="dob">
     <select id="gender">
       <option value="M">Male</option>
       <option value="F">Female</option>
     </select>
 
-    <button class="tool-button" onclick="generateDLN()">Generate</button>
+    <button class="tool-button" onclick="generateDLN()">Generate DLN</button>
 
-    <div id="outputBox"></div>
+    <div id="outputBox" style="margin-top: 20px;"></div>
 
     <a href="../index.html" class="tool-button" style="margin-top:30px;">⬅ Back</a>
   </div>
+
   <script src="../js/quebec-dln-gen.js"></script>
 </body>
 </html>
