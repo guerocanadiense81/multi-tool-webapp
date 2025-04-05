@@ -1,2 +1,19 @@
-<!-- carrier-lookup - fully functional HTML -->
-<script src='carrier-lookup.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrier Lookup</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📱 Carrier Lookup</h1>
+    <input id="phoneInput" type="text" placeholder="Enter US number (e.g. 5551234567)" />
+    <button class="tool-button" onclick="lookupCarrier()">Lookup</button>
+    <div id="outputBox"></div>
+    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  </div>
+  <script src="../js/carrier-lookup.js"></script>
+</body>
+</html>
