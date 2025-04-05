@@ -1,2 +1,18 @@
-<!-- btc-gen - fully functional HTML -->
-<script src='btc-gen.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BTC Wallet Generator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>₿ BTC Wallet Generator</h1>
+    <button class="tool-button" onclick="generateBTC()">Generate Wallet</button>
+    <div id="outputBox"></div>
+    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  </div>
+  <script src="../js/btc-gen.js"></script>
+</body>
+</html>
