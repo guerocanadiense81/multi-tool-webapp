@@ -5,14 +5,16 @@
   <title>BTC Wallet Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/bip39@3.0.4/browser/bip39.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tiny-secp256k1@2.2.1/lib/index.min.js"></script>
+
+  <!-- ✅ Working CDNs -->
+  <script src="https://cdn.jsdelivr.net/npm/bip39@3.0.4/dist/index.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>₿ BTC Wallet Generator</h1>
     <button class="tool-button" onclick="generateBTC()">Generate Wallet</button>
+    <button class="tool-button" id="downloadBtn" style="display:none;" onclick="downloadWallet()">⬇ Download Wallet.txt</button>
     <div id="outputBox" style="margin-top: 20px;"></div>
     <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
   </div>
