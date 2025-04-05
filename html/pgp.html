@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PGP Key Generator</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/openpgp@5.5.0/dist/openpgp.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>PGP Key Generator</h1>
+
+    <input type="text" id="pgpName" placeholder="Full Name" />
+    <input type="email" id="pgpEmail" placeholder="Email Address" />
+    <input type="password" id="pgpPass" placeholder="Password (for private key)" />
+
+    <button class="tool-button" onclick="generatePGP()">Generate Keys</button>
+
+    <h3>Public Key</h3>
+    <textarea id="pgpPub" rows="6" readonly></textarea>
+    <button onclick="copyText('pgpPub')" class="tool-button">Copy Public Key</button>
+
+    <h3>Private Key</h3>
+    <textarea id="pgpPriv" rows="6" readonly></textarea>
+    <button onclick="copyText('pgpPriv')" class="tool-button">Copy Private Key</button>
+
+    <a href="index.html" class="tool-button" style="margin-top: 30px;">Back to Home</a>
+</body>
+<script src="js/pgp.js"></script>
+</html>
