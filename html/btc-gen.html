@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>BTC Wallet Generator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../css/style.css">
-
-  <!-- ✅ Correct libraries that work in-browser -->
-  <script src="https://unpkg.com/bip39@3.0.4/browser/bip39.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
   <div class="container">
@@ -18,12 +14,19 @@
     <div id="outputBox" style="margin-top: 20px;"></div>
     <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
 
+    <!-- ✅ Load scripts LAST to avoid undefined error -->
+    <script src="https://unpkg.com/bip39@3.0.4/browser/bip39.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
     <script>
       let latestWallet = null;
 
       function generateBTC() {
         try {
-          const mnemonic = bip39.generateMnemonic(); // ✅ Works now!
+          if (!window.bip39 || !window.bitcoinjs) {
+            throw new Error("Libraries not loaded yet");
+          }
+
+          const mnemonic = bip39.generateMnemonic();
           const seed = bip39.mnemonicToSeedSync(mnemonic);
           const root = bitcoinjs.bip32.fromSeed(seed);
           const child = root.derivePath("m/44'/0'/0'/0/0");
@@ -40,7 +43,7 @@
           document.getElementById("downloadBtn").style.display = "inline-block";
         } catch (err) {
           document.getElementById("outputBox").innerHTML =
-            `<p style="color:red;">❌ Error: ${err.message}</p>`;
+            `<p style="color:red;">❌ Failed to generate: ${err.message}</p>`;
           document.getElementById("downloadBtn").style.display = "none";
         }
       }
