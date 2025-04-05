@@ -2,19 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Advanced Google Dork Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Google Dork Generator</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>🕵️ Google Dork Generator</h1>
-    <label>Search term:</label>
-    <input id="term" type="text" placeholder="password filetype:txt">
-    <button class="tool-button" onclick="generateDork()">Generate</button>
-    <div id="outputBox"></div>
+    <h1>🔎 Advanced Google Dork Generator</h1>
+
+    <label for="dorkCategory">Choose Category:</label>
+    <select id="dorkCategory" onchange="generateDorks()">
+      <option value="files">📁 Sensitive Files</option>
+      <option value="cams">📷 Webcams / Cams</option>
+      <option value="credentials">🔑 Credentials</option>
+      <option value="indexes">📂 Directory Listings</option>
+      <option value="login">🔐 Admin/Login Pages</option>
+      <option value="custom">🧠 Custom Keyword</option>
+    </select>
+
+    <input id="customInput" type="text" placeholder="Enter custom term" style="display:none; margin-top: 10px;" />
+
+    <button class="tool-button" onclick="generateDorks()">Generate</button>
+    <button class="tool-button" onclick="copyDorks()">📋 Copy All</button>
+    <button class="tool-button" onclick="openDorks()">🌐 Open All</button>
+
+    <ul id="outputBox" class="dork-list" style="margin-top:20px;"></ul>
+
     <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
   </div>
+
   <script src="../js/google-dork.js"></script>
 </body>
 </html>
