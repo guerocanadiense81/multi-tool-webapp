@@ -2,10 +2,7 @@ let ethWallet = null;
 
 function generateMnemonic() {
   try {
-    const bip39 = window.bip39;
-    const ethers = window.ethers;
-
-    const mnemonic = bip39.generateMnemonic();
+    const mnemonic = window.bip39.generateMnemonic();
     const wallet = ethers.Wallet.fromMnemonic(mnemonic);
 
     ethWallet = {
@@ -44,12 +41,9 @@ ${ethWallet.privateKey}
 
   const blob = new Blob([text.trim()], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
-
   const a = document.createElement("a");
   a.href = url;
   a.download = "eth-wallet.txt";
-  document.body.appendChild(a);
   a.click();
-  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
