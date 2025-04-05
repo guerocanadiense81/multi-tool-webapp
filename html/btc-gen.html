@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <title>BTC Wallet Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Updated CSP: allow scripts from cdnjs and cdn.jsdelivr.net and unsafe-eval if necessary -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net 'unsafe-eval' 'nonce-abc123';">
+  <!-- Updated CSP: Note that inline styles are not allowed so we only allow styles from 'self' -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net 'unsafe-eval' 'nonce-abc123'; style-src 'self';">
   <link rel="stylesheet" href="../css/style.css">
   
-  <!-- Load bitcore-mnemonic (alternative to bip39) -->
+  <!-- Load alternative mnemonic library and bitcoinjs-lib -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bitcore-mnemonic/2.0.0/bitcore-mnemonic.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
 </head>
@@ -16,9 +16,12 @@
   <div class="container">
     <h1>₿ BTC Wallet Generator</h1>
     <button class="tool-button" id="generateBtn">Generate Wallet</button>
-    <button class="tool-button" id="downloadBtn" style="display:none;">⬇ Download Wallet.txt</button>
-    <div id="outputBox" style="margin-top: 20px;"></div>
-    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+    <!-- The download button starts hidden via its CSS class -->
+    <button class="tool-button hidden" id="downloadBtn">⬇ Download Wallet.txt</button>
+    <!-- Removed inline style: use class "output-box" for margin -->
+    <div id="outputBox" class="output-box"></div>
+    <!-- Removed inline style: use class "back-link" for margin -->
+    <a href="../index.html" class="tool-button back-link">⬅ Back</a>
   </div>
   <!-- External JavaScript file with nonce -->
   <script src="../js/btc-gen.js" nonce="abc123"></script>
