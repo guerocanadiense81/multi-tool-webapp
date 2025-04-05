@@ -1,1 +1,19 @@
-<input type="email" id="emailInput"><button onclick="validateEmail()">Validate</button><script src="../js/email-validator.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Validator</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>✉️ Email Validator</h1>
+    <input id="emailInput" type="email" placeholder="Enter email address" />
+    <button class="tool-button" onclick="validateEmail()">Validate</button>
+    <div id="outputBox"></div>
+    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+  </div>
+  <script src="../js/email-validator.js"></script>
+</body>
+</html>
