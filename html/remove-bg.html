@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Remove Background</title>
+  <meta charset="UTF-8" />
+  <title>AI Background Remover</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
   <div class="container">
     <h1>🖼️ AI Background Remover</h1>
-    <input type="file" id="upload" accept="image/*" />
-    <button class="tool-button" onclick="removeBackground()">Remove BG</button>
-    <div id="outputBox">
-      <img id="preview" style="max-width:100%; margin-top:10px;" />
+
+    <div id="dropArea" class="drop-area">
+      <p>📥 Drag & drop an image or paste from clipboard</p>
+      <input type="file" id="fileInput" accept="image/*" />
     </div>
-    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back</a>
+
+    <button class="tool-button" id="removeBtn">Remove Background</button>
+
+    <div id="output">
+      <img id="preview" style="max-width:100%; margin-top:20px;" />
+      <br />
+      <a id="downloadBtn" class="tool-button" style="display:none;" download="transparent-image.png">⬇ Download Image</a>
+    </div>
+
+    <a href="../index.html" class="tool-button" style="margin-top: 30px;">⬅ Back to Home</a>
+    <script src="../js/remove-bg.js"></script>
   </div>
-  <script src="../js/remove-bg.js"></script>
 </body>
 </html>
