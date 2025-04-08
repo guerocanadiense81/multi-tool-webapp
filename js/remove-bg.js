@@ -1,20 +1,97 @@
-async function removeBackground() {
-  const file = document.getElementById("upload").files[0];
-  if (!file) return alert("Upload an image first.");
+let selectedImage = null;
+const fileInput = document.getElementById('fileInput');
+const dropArea = document.getElementById('dropArea');
+const removeBtn = document.getElementById('removeBtn');
+const previewImg = document.getElementById('preview');
+const downloadBtn = document.getElementById('downloadBtn');
 
-  const formData = new FormData();
-  formData.append("image_file", file);
-  formData.append("size", "auto");
+// Handle file input
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file && file.type.startsWith("image/")) {
+    loadImage(file);
+  }
+});
 
-  const res = await fetch("https://api.remove.bg/v1.0/removebg", {
-    method: "POST",
-    headers: { "X-Api-Key": "wLouGuqpqF3yHsBY9zeiJSGT" }, // Replace with actual key
-    body: formData
-  });
+// Drag & drop support
+dropArea.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropArea.classList.add("highlight");
+});
+dropArea.addEventListener("dragleave", () => {
+  dropArea.classList.remove("highlight");
+});
+dropArea.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropArea.classList.remove("highlight");
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith("image/")) {
+    loadImage(file);
+  }
+});
 
-  if (!res.ok) return alert("Failed to remove background");
+// Paste from clipboard
+window.addEventListener("paste", (e) => {
+  const items = e.clipboardData.items;
+  for (const item of items) {
+    if (item.type.startsWith("image/")) {
+      const file = item.getAsFile();
+      loadImage(file);
+    }
+  }
+});
 
-  const blob = await res.blob();
-  const url = URL.createObjectURL(blob);
-  document.getElementById("preview").src = url;
+// Load image into preview
+function loadImage(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    selectedImage = e.target.result;
+    previewImg.src = selectedImage;
+    downloadBtn.style.display = "none";
+  };
+  reader.readAsDataURL(file);
 }
+
+removeBtn.addEventListener("click", async () => {
+  if (!selectedImage) {
+    alert("Please upload an image first.");
+    return;
+  }
+
+  try {
+    removeBtn.textContent = "Removing...";
+    removeBtn.disabled = true;
+
+    const blob = await fetch(selectedImage).then(res => res.blob());
+    const formData = new FormData();
+    formData.append("image_file", blob, "input.png");
+
+    const res = await fetch("https://api.remove.bg/v1.0/removebg", {
+      method: "POST",
+      headers: {
+        "X-Api-Key": "wLouGuqpqF3yHsBY9zeiJSGT" // ✅ your API key
+      },
+      body: formData
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Remove.bg error: ${res.status} - ${errorText}`);
+    }
+
+    const resultBlob = await res.blob();
+    const resultUrl = URL.createObjectURL(resultBlob);
+
+    previewImg.src = resultUrl;
+    downloadBtn.href = resultUrl;
+    downloadBtn.download = "no-bg.png";
+    downloadBtn.style.display = "inline-block";
+
+  } catch (err) {
+    alert("❌ Error: " + err.message);
+  } finally {
+    removeBtn.textContent = "Remove Background";
+    removeBtn.disabled = false;
+  }
+});
+
