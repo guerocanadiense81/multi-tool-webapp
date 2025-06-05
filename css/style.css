@@ -118,6 +118,19 @@ button.tool-button:hover {
 /* (Optional) Other styling for your tool buttons and container */
 .container {
   /* Your container styles here */
+  /* 1. The white background container */
+.qr-wrapper {
+  background-color: #ffffff;   /* pure white */
+  display: inline-block;       /* shrink to fit the QR image */
+  padding: 16px;               /* optional spacing around the QR */
+  border-radius: 8px;          /* optional rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* subtle shadow for contrast */
+}
+
+/* 2. (Optional) Force the actual QR element to be centered */
+.qr-wrapper #qrcode {
+  display: block;
+  margin: 0 auto;
 }
 
 .tool-button {
